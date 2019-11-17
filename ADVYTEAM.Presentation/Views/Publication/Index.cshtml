@@ -1,50 +1,50 @@
 ﻿
-    <html>
-    <head>
-        <style>
-            table {
-                font-family: arial, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
-            }
+<html>
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-            td, th {
-                border: 1px solid #dddddd;
-                text-align: left;
-                padding: 8px;
-            }
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
 
-            tr:nth-child(even) {
-                background-color: #dddddd;
-            }
-        </style>
-    </head>
-    <body>
-        <h3>Liste employee</h3>
-        <table>
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <h3>Liste employee</h3>
+    <table>
+
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Date Naisance</th>
+
+
+
+        </tr>
+
+        @foreach (var p in ViewBag.result)
+        {
 
             <tr>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Date Naisance</th>
-            
-                 
-                
+
+                <td>@p.description</td>
+                <td>@p.dateCreation</td>
+                <th>@p.utilisateur.nom</th>
+
             </tr>
 
-            @foreach (var p in ViewBag.result)
-            {
+        }
 
-                <tr>
-
-                    <td>@p.description</td>
-                    <td>@p.dateCreation</td>
-                    <th>@p.u</th>
-            
-                </tr>
-
-            }
-
-        </table>
-    </body>
-    </html>
+    </table>
+</body>
+</html>

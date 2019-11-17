@@ -18,10 +18,16 @@ namespace ADVYTEAM.Presentation.Models
             Client.BaseAddress = new Uri("http://localhost:9080");
             Client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage responce = Client.GetAsync("/PIDEV-web/PIDEV/gestionEmploye/publication").Result;
+            HttpResponseMessage responce2;
             if (responce.IsSuccessStatusCode)
             {
                 IEnumerable<publication> lstPub = responce.Content.ReadAsAsync<IEnumerable<publication>>().Result;
 
+                foreach (var pub in lstPub)
+                {
+                    responce2= Client.GetAsync("/PIDEV-web/PIDEV/gestionEmploye/publication/"+pub.id).Result;
+                    pub.utilisateur= responce2.Content.ReadAsAsync<utilisateur>().Result;
+                }
 
                 ViewBag.result = lstPub;
             }
