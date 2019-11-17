@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ADVYTEAM.Domain.Entities.reclamation>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Objet)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateReclamation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateTraitement)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Etat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Utilisateur.type)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Objet)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateReclamation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateTraitement)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Etat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Utilisateur.type)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
