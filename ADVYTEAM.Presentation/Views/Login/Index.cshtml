@@ -1,5 +1,4 @@
-﻿
-<html>
+﻿<html>
 <head>
     <style>
         table {
@@ -21,6 +20,11 @@
 </head>
 <body>
 
-     @Session["user"].ToString()
+    <p> @Session["userid"].ToString() </p>
+    <p> @Session["usernom"].ToString() </p>
+    <p><img src="data:image/jpeg;base64,@Session["userimg"].ToString() " width="130" height="130" /></p>
+    
+
+
 </body>
 </html>

@@ -17,7 +17,7 @@ namespace ADVYTEAM.Presentation.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            return View();
+            return View(user);
         }
 
         // GET: Login/Details/5
@@ -39,14 +39,17 @@ namespace ADVYTEAM.Presentation.Controllers
             Client = new HttpClient();
             Client.BaseAddress = new Uri("http://localhost:9080");
             Client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            responce = Client.GetAsync("/PIDEV-web/PIDEV/gestionEmploye/login?login=" + loginVm.login + "&pass=" + loginVm.password).Result;
+            responce = Client.GetAsync("/PIDEV-web/PIDEV/gestionEmploye/login?login="+loginVm.login+"&pass="+loginVm.password).Result;
 
             user = responce.Content.ReadAsAsync<utilisateur>().Result;
 
-            if (user != null) {
-                Session["user"]  = user.nom;
-               
-                return RedirectToAction("Index");
+            if (user != null)
+            {
+                Session["userid"] = user.id;
+                Session["usernom"] = user.nom +" "+user.prenom;
+                Session["userimg"] = user.image;
+                return Redirect("~/Publication/Index");
+                // return RedirectToAction("Index");
             }
             return View();
             
