@@ -25,6 +25,24 @@ namespace ADVYTEAM.Presentation
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            #region Template Desing
+
+            bundles.Add(new ScriptBundle("~/template/script").Include(
+                        "~/Content/plugins/jquery/jquery.min.js",
+                        "~/Content/plugins/bootstrap/js/bootstrap.bundle.min.js",
+                        "~/Content/dist/js/adminlte.min.js",
+                        "~/Content/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"
+                        ));
+
+            bundles.Add(new StyleBundle("~/template/css").Include(
+                      "~/Content/plugins/font-awesome/css/font-awesome.min.css",
+                      "~/Content/dist/css/adminlte.min.css",
+                      "~/Content/plugins/fontawesome-free/css/all.min.css",
+                      "~/Content/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"
+                      ));
+            
+            #endregion
         }
     }
 }
