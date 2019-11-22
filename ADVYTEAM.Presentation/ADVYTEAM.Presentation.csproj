@@ -172,6 +172,7 @@
     <Compile Include="Controllers\PublicationController.cs" />
     <Compile Include="Models\LoginVM.cs" />
     <Compile Include="Models\ReclamationVM.cs" />
+    <Compile Include="Models\UserVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

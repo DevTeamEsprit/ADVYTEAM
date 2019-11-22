@@ -45,11 +45,17 @@ namespace ADVYTEAM.Presentation.Controllers
 
             if (user != null)
             {
-                Session["userid"] = user.id;
-                Session["usernom"] = user.nom +" "+user.prenom;
-                Session["userimg"] = user.image;
+                UserVM u = new UserVM
+                {
+                    prenom = user.prenom,
+                    nom = user.nom,
+                    image = user.image,
+                    id = user.id
+                };
+                Session["userConnected"] = u;
+              
                 return Redirect("~/Publication/Index");
-                // return RedirectToAction("Index");
+                
             }
             return View();
             

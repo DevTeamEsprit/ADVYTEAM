@@ -62,6 +62,8 @@ namespace ADVYTEAM.Presentation.Controllers
         [HttpPost]
         public ActionResult Create(ReclamationVM reclamationVM)
         {
+            UserVM userc = Session["userConnected"] as UserVM;
+
             if (ModelState.IsValid)
             {
                 reclamation r = new reclamation()
@@ -71,18 +73,13 @@ namespace ADVYTEAM.Presentation.Controllers
                     DateReclamation = DateTime.Now,
                     DateTraitement = null,
                     Etat = false,
-                    UserId = 1L,
+                    UserId = userc.id
                     
                 };
-                utilisateur user = serviceUtilisateur.GetById((int)1L);
+                utilisateur user = serviceUtilisateur.GetById((int)userc.id);
                 user.Reclamations.Add(r);
                 serviceUtilisateur.Commit();
-
-            //    serviceReclamation.Add(r);
-           //     serviceReclamation.Commit();
-                //    serReclamation.Add(r);
-                //serReclamation.Commit();
-            //    uow.Dispose();
+ 
 
                 return RedirectToAction("Index");
             }

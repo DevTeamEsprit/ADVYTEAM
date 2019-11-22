@@ -11,6 +11,7 @@ namespace ADVYTEAM.Data
         public MyContext()
             : base("name=MyContext1")
         {
+            
         }
 
         public virtual DbSet<category> categories { get; set; }
