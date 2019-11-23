@@ -13,4 +13,9 @@ namespace ADVYTEAM.Presentation.Models
         public long? id_user { get; set; }
         public virtual utilisateur utilisateur { get; set; }
     }
+    //public class OurModel
+    //{
+    //    public  PublicationVM aa { get;set;}
+    //    public UserVM bb { get; set; }
+    //}
 }

@@ -9,11 +9,26 @@
 <br />
 <section class="content">
     <div class="container-fluid">
-        @{Html.RenderPartial("Create");}
-        <br />
-        <br />
+        
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-9">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <div class="user-block">
+                            <img class="img-circle"
+                                 src="data:image/jpeg;base64,@userc.image"
+                                 alt="User Image" />
+                            <span class="username">
+                                <a href="#">
+                                    créer
+                                    une publication
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                    @{Html.RenderPartial("Create");}
+
+                </div>
                 @foreach (var p in ViewBag.result)
                 {
                     <!-- Box Comment -->

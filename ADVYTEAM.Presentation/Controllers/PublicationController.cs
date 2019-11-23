@@ -15,7 +15,8 @@ namespace ADVYTEAM.Presentation.Models
         // GET: Publication
         public ActionResult Index()
         {
-
+            UserVM userc = Session["userConnected"] as UserVM;
+            Session["emp"] = userc.image;
             HttpClient Client = new HttpClient();
             Client.BaseAddress = new Uri("http://localhost:9080");
             Client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
@@ -37,6 +38,8 @@ namespace ADVYTEAM.Presentation.Models
             {
                 ViewBag.result = "error";
             }
+           
+             
 
             return View();
         
@@ -59,6 +62,7 @@ namespace ADVYTEAM.Presentation.Models
         public ActionResult Create(PublicationVM publicationvm)
         {
             UserVM userc = Session["userConnected"] as UserVM;
+            Session["emp"] = userc.image;
 
             publication p = new publication()
             {
