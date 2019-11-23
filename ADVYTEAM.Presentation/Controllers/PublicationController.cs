@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace ADVYTEAM.Presentation.Models
 {
@@ -54,18 +56,32 @@ namespace ADVYTEAM.Presentation.Models
 
         // POST: Publication/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(PublicationVM publicationvm)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            UserVM userc = Session["userConnected"] as UserVM;
 
-                return RedirectToAction("Index");
-            }
-            catch
+            publication p = new publication()
             {
-                return View();
-            }
+                description=publicationvm.description,
+                id_user = userc.id
+
+            };
+
+            HttpClient client = new HttpClient();
+
+            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, "http://localhost:9080/PIDEV-web/PIDEV/gestionEmploye/publication");
+            //requestMessage.Headers.Add("Authorization", "key=AAAAG...:APA91bH7U...");
+            string json = new JavaScriptSerializer().Serialize(new
+            {
+                description = p.description,
+                user = new { id = userc.id }
+            });
+
+            requestMessage.Content = new StringContent(json, Encoding.UTF8, "application/json");
+           
+            HttpResponseMessage response = client.SendAsync(requestMessage).GetAwaiter().GetResult();
+            return RedirectToAction("Index");
+
         }
 
         // GET: Publication/Edit/5

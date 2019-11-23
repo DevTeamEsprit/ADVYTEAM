@@ -171,6 +171,7 @@
     </Compile>
     <Compile Include="Controllers\PublicationController.cs" />
     <Compile Include="Models\LoginVM.cs" />
+    <Compile Include="Models\PublicationVM.cs" />
     <Compile Include="Models\ReclamationVM.cs" />
     <Compile Include="Models\UserVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2951,6 +2952,7 @@
     <Content Include="Views\Publication\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\_templateLayout.cshtml" />
+    <Content Include="Views\Publication\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
