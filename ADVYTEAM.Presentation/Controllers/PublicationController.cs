@@ -21,7 +21,7 @@ namespace ADVYTEAM.Presentation.Models
             Client.BaseAddress = new Uri("http://localhost:9080");
             Client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage responce = Client.GetAsync("/PIDEV-web/PIDEV/gestionEmploye/publication").Result;
-            HttpResponseMessage responce2, responce3;
+       //     HttpResponseMessage responce2, responce3;
             if (responce.IsSuccessStatusCode)
             {
                 IEnumerable<PublicationVM> lstPub = responce.Content.ReadAsAsync<IEnumerable<PublicationVM>>().Result;
@@ -119,23 +119,28 @@ namespace ADVYTEAM.Presentation.Models
         // GET: Publication/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            HttpClient Client = new HttpClient();
+            Client.BaseAddress = new Uri("http://localhost:9080");
+            Client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage responce = Client.DeleteAsync("/PIDEV-web/PIDEV/gestionEmploye/publication/"+id).Result;
+
+            return RedirectToAction("Index");
         }
 
         // POST: Publication/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
+        //[HttpPost]
+        //public ActionResult Delete(int id, FormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }

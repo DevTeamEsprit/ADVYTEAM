@@ -43,13 +43,14 @@
 
                                 <span class="description">
                                     Shared publicly - @p.dateCreation
-                                    <a href="#" class="float-right btn-tool"><i class="fas fa-trash"></i></a>
+                                    
                                 </span>
                             </div>
                             <!-- /.user-block -->
                             <div class="card-tools">
+                                @Html.ActionLink("Delete", "Delete", new { id = @p.id })
                                 <button type="button" class="btn btn-tool" data-widget="collapse">
-                                    <i class="fa fa-minus"></i>
+                                    <i class="fas fa-edit"></i>
                                 </button>
                                 <button type="button" class="btn btn-tool" data-widget="remove">
                                     <i class="fas fa-trash"></i>
