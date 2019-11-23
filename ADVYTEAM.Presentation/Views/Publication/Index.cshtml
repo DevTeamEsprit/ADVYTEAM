@@ -49,32 +49,35 @@
                                 @p.description
                             </p>
 
-
+                            <p>
+                                
+                            </p>
 
                             <!-- Social sharing buttons -->
                             <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i> Share</button>
                             <button type="button" class="btn btn-default btn-sm"><i class="fa fa-thumbs-o-up"></i> Like</button>
-                            <span class="float-right text-muted">45 likes - 2 comments</span>
+                            <span class="float-right text-muted">45 likes - @p.commentaires.Count comments</span>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer card-comments">
-                            <div class="card-comment">
-                                <!-- User image -->
-                                <img class="img-circle img-sm" src="../dist/img/user3-128x128.jpg" alt="User Image">
+                            @foreach (var com in p.commentaires)
+                            {
+                                <div class="card-comment">
+                                    <!-- User image -->
+                                    <img class="img-circle img-sm" src="../dist/img/user3-128x128.jpg" alt="User Image">
 
-                                <div class="comment-text">
-                                    <span class="username">
-                                        Maria Gonzales
-                                        <span class="text-muted float-right">8:03 PM Today</span>
-                                    </span><!-- /.username -->
-                                    It is a long established fact that a reader will be distracted
-                                    by the readable content of a page when looking at its layout.
+                                    <div class="comment-text">
+                                        <span class="username">
+                                            Maria Gonzales
+                                            <span class="text-muted float-right">@com.dateCreation</span>
+                                        </span><!-- /.username -->
+                                        @com.description .
+                                    </div>
+                                    <!-- /.comment-text -->
                                 </div>
-                                <!-- /.comment-text -->
+                                <!-- /.card-comment -->
+                            }
                             </div>
-                            <!-- /.card-comment -->
-
-                        </div>
                         <!-- /.card-footer -->
                         <div class="card-footer">
                             <form action="#" method="post">
