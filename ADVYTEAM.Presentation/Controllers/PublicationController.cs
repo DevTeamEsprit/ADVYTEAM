@@ -24,20 +24,18 @@ namespace ADVYTEAM.Presentation.Models
             HttpResponseMessage responce2, responce3;
             if (responce.IsSuccessStatusCode)
             {
-                IEnumerable<publication> lstPub = responce.Content.ReadAsAsync<IEnumerable<publication>>().Result;
+                IEnumerable<PublicationVM> lstPub = responce.Content.ReadAsAsync<IEnumerable<PublicationVM>>().Result;
 
-                foreach (var pub in lstPub)
-                {
-                    responce2= Client.GetAsync("/PIDEV-web/PIDEV/gestionEmploye/publication/"+pub.id).Result;
-                    pub.utilisateur= responce2.Content.ReadAsAsync<utilisateur>().Result;
-                    responce3 = Client.GetAsync("/PIDEV-web/PIDEV/gestionEmploye/publication/commentaire/"+ pub.id).Result;
-                    pub.commentaires = responce3.Content.ReadAsAsync<IList<commentaire>>().Result;
-                  //  pub.commentaires.Ad
-                    //foreach (var com in lstcom)
-                    //{
-                    //   ;
-                    //}
-                }
+                //foreach (var pub in lstPub)
+                //{
+                //    responce2= Client.GetAsync("/PIDEV-web/PIDEV/gestionEmploye/publication/"+pub.id).Result;
+                //    pub.utilisateur= responce2.Content.ReadAsAsync<utilisateur>().Result;
+                //    responce3 = Client.GetAsync("/PIDEV-web/PIDEV/gestionEmploye/publication/commentaire/"+ pub.id).Result;
+                //    pub.commentaires = responce3.Content.ReadAsAsync<IList<commentaire>>().Result;
+                             
+                //}
+
+                
 
 
                 ViewBag.result = lstPub;

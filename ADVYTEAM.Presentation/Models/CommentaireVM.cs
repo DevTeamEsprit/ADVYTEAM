@@ -6,12 +6,14 @@ using System.Web;
 
 namespace ADVYTEAM.Presentation.Models
 {
-    public class PublicationVM
+    public class CommentaireVM
     {
-        public string description { get; set; }     
         public long id { get; set; }
         public DateTime? dateCreation { get; set; }
-        public virtual ICollection<CommentaireVM> lstComm { get; set; }
+        public string description { get; set; }
+
+       // public long? id_user { get; set; }
+
         public virtual utilisateur user { get; set; }
     }
 }

@@ -170,6 +170,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Controllers\PublicationController.cs" />
+    <Compile Include="Models\CommentaireVM.cs" />
     <Compile Include="Models\LoginVM.cs" />
     <Compile Include="Models\PublicationVM.cs" />
     <Compile Include="Models\ReclamationVM.cs" />
@@ -200,6 +201,8 @@
     <Content Include="Content\build\npm\Plugins.js" />
     <Content Include="Content\build\npm\Publish.js" />
     <Content Include="Content\build\test.js" />
+    <Content Include="Content\css\main.css" />
+    <Content Include="Content\css\util.css" />
     <Content Include="Content\dist\css\adminlte.css" />
     <Content Include="Content\dist\css\adminlte.min.css" />
     <Content Include="Content\dist\img\AdminLTELogo.png" />
@@ -300,6 +303,10 @@
     <Content Include="Content\docs\assets\plugins\popper\umd\popper-utils.min.js" />
     <Content Include="Content\docs\assets\plugins\popper\umd\popper.js" />
     <Content Include="Content\docs\assets\plugins\popper\umd\popper.min.js" />
+    <Content Include="Content\images\bg-01.jpg" />
+    <Content Include="Content\images\icons\favicon.ico" />
+    <Content Include="Content\js\jquery-3.2.1.min.js" />
+    <Content Include="Content\js\main.js" />
     <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
     <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
     <Content Include="Content\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
@@ -2953,6 +2960,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\_templateLayout.cshtml" />
     <Content Include="Views\Publication\Create.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
