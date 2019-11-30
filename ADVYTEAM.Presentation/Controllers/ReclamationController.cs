@@ -12,7 +12,10 @@ namespace ADVYTEAM.Presentation.Controllers
     {
  
              IEnumerable<reclamation> lstRecl;
-             IReclamationService serviceReclamation;
+        IEnumerable<reclamation> lstReclt;
+        IEnumerable<reclamation> lstReclc;
+        IEnumerable<reclamation> lstRecln;
+        IReclamationService serviceReclamation;
              IUtilisateurService serviceUtilisateur;
 
         public ReclamationController()
@@ -22,11 +25,42 @@ namespace ADVYTEAM.Presentation.Controllers
  
         }
 
+        public ActionResult updateRecl(int id)
+        {
+            reclamation r = serviceReclamation.Get(f => f.Id == id);
+            utilisateur us = serviceUtilisateur.Get(user => user.id == r.UserId);
+
+            if (r.Etat == 0)
+                r.Etat = 1;
+            else if (r.Etat == 1)
+            {
+                r.Etat = 2;
+                r.DateTraitement = DateTime.Now;
+            }
+
+            foreach (reclamation rec in us.Reclamations)
+            {
+             if(rec.Id==id)
+                {
+                    if (rec.Etat == 0)
+                        rec.Etat = 1;
+                    else if (rec.Etat == 1) { 
+                        rec.Etat = 2;
+                    rec.DateTraitement=DateTime.Now;
+                }
+                }
+            } 
+            serviceUtilisateur.Commit();
+            return RedirectToAction("Index");
+        }
+
+
         public ActionResult MesReclamation()
         {
             UserVM userc = Session["userConnected"] as UserVM;
 
-            lstRecl = serviceReclamation.GetMany(reclamation=>reclamation.UserId== userc.id);
+            //   lstRecl = serviceReclamation.GetMany(reclamation=>reclamation.UserId== userc.id);
+            lstRecl = serviceReclamation.GetMesReclmations(userc.id);
 
             foreach (var rec in lstRecl)
             {
@@ -46,13 +80,28 @@ namespace ADVYTEAM.Presentation.Controllers
             if (userc == null)
                 return RedirectToAction("Create", "Login");
 
-            lstRecl = serviceReclamation.GetMany();
-            foreach (var rec in lstRecl)
+            lstRecln = serviceReclamation.GetReclmationsAttent();
+            lstReclc = serviceReclamation.GetReclmationsEnCour();
+            lstReclt = serviceReclamation.GetReclmationsTraite();
+            // lstRecl = serviceReclamation.GetMany();
+            foreach (var rec in lstRecln)
             {
                 rec.Utilisateur = serviceUtilisateur.GetById((int)rec.UserId);
             }
- 
-                return View(lstRecl);
+            foreach (var rec in lstReclc)
+            {
+                rec.Utilisateur = serviceUtilisateur.GetById((int)rec.UserId);
+            }
+            foreach (var rec in lstReclt)
+            {
+                rec.Utilisateur = serviceUtilisateur.GetById((int)rec.UserId);
+            }
+            ViewBag.reclamationAttnte = lstRecln;
+            ViewBag.reclamationCours = lstReclc;
+            ViewBag.reclamationTraite= lstReclt;
+
+
+            return View();
         }
 
         // GET: Reclamation/Details/5

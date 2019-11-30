@@ -10,6 +10,9 @@ namespace ADVYTEAM.Services
 {
     public interface IReclamationService : IService<reclamation>
     {
-       
+        IEnumerable<reclamation> GetMesReclmations(long id);
+        IEnumerable<reclamation> GetReclmationsAttent();
+        IEnumerable<reclamation> GetReclmationsEnCour();
+        IEnumerable<reclamation> GetReclmationsTraite();
     }
 }

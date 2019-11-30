@@ -8,8 +8,7 @@ namespace ADVYTEAM.Data
 
     public partial class MyContext : DbContext
     {
-        public MyContext()
-            : base("name=MyContext1")
+        public MyContext() : base("name=MyContext1")
         {
             
         }
@@ -319,6 +318,6 @@ namespace ADVYTEAM.Data
                 .HasForeignKey(e => e.manager_id);
         }
 
-        public System.Data.Entity.DbSet<ADVYTEAM.Domain.Entities.reclamation> reclamations { get; set; }
+        public virtual System.Data.Entity.DbSet<ADVYTEAM.Domain.Entities.reclamation> reclamations { get; set; }
     }
 }

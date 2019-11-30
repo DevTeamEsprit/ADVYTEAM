@@ -2958,7 +2958,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Reclamation\Create.cshtml" />
-    <Content Include="Views\Reclamation\Index.cshtml" />
     <Content Include="Views\Login\Create.cshtml" />
     <Content Include="Views\Publication\Index.cshtml" />
     <Content Include="Views\Shared\_templateLayout.cshtml" />
@@ -2970,6 +2969,7 @@
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\Chat\Details.cshtml" />
     <Content Include="Views\Reclamation\MesReclamation.cshtml" />
+    <Content Include="Views\Reclamation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
