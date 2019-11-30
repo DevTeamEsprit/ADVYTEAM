@@ -2,6 +2,7 @@
 @{ 
 
     UserVM userc = Session["userConnected"] as UserVM;
+      List<UserVM> lstcontact = Session["lstContact"] as List<UserVM>;
 
 }
 <!DOCTYPE html>
@@ -65,7 +66,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <div  class="brand-link">
+            <div class="brand-link">
                 <img src="../../Content/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                      style="opacity: .8">
 
@@ -89,7 +90,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                             with font-awesome or any other icon font library -->
+                        with font-awesome or any other icon font library -->
                         <li class="nav-item has-treeview menu-open">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fa fa-dashboard"></i>
@@ -138,22 +139,53 @@
 
 
         <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-            <div class="p-3">
-                <h5>Title</h5>
 
-            </div>
+        <aside class="control-sidebar control-sidebar-dark scrollbar">
+
+            @{Html.RenderPartial("ListContact");}
+
+            @*@foreach (var p in lstcontact)
+                {
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex aside-contact">
+                        <div class="image">
+                            <img src="data:image/png;base64,@p.image"
+                                 class="img-circle elevation-2" alt="User Image" />
+                        </div>
+                        </div>
+                 }*@
+
+
         </aside>
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".control-sidebar").height($(window).height() - 57);
+            window.onscroll = function () {
+                if ($('.control-sidebar').is(':visible')) {
+                    $(".control-sidebar").css({ position: "fixed" });
+                    if (document.body.scrollTop > 57 || document.documentElement.scrollTop > 57) {
+                        $(".control-sidebar").css({ top: "0px" });
+                    } else {
+                        $(".control-sidebar").css({ position: "", top: "57px" });
+                    }
+                } else {
+                    $(".control-sidebar").css({ position: "" });
+                }
+
+            };
+        });
+
+
+    </script>
     @Scripts.Render("~/template/script")
     @RenderSection("scripts", required: false)
+    @RenderSection("MyScripts", required: false)
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-  
-    
+
+
 </body>
 </html>

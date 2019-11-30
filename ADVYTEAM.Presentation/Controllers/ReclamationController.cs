@@ -10,12 +10,7 @@ namespace ADVYTEAM.Presentation.Controllers
 {
     public class ReclamationController : Controller
     {
-      //  IDataBaseFactory factory;
-      //  IUnitOfWork uow;
-       
-       
-     //   IService<reclamation> serReclamation;
-     //   IService<utilisateur> serUser;
+ 
              IEnumerable<reclamation> lstRecl;
              IReclamationService serviceReclamation;
              IUtilisateurService serviceUtilisateur;
@@ -24,25 +19,39 @@ namespace ADVYTEAM.Presentation.Controllers
         {
             serviceReclamation = new ReclamationService();
             serviceUtilisateur = new UtilisateurService();
-            //   factory = new DataBaseFactory();
-            //   uow = new UnitOfWork(factory);
-            //    serReclamation = new Service<reclamation>(uow);
-            //    serUser = new Service<utilisateur>(uow);
+ 
         }
-        // GET: Reclamation
+
+        public ActionResult MesReclamation()
+        {
+            UserVM userc = Session["userConnected"] as UserVM;
+
+            lstRecl = serviceReclamation.GetMany(reclamation=>reclamation.UserId== userc.id);
+
+            foreach (var rec in lstRecl)
+            {
+                rec.Utilisateur = serviceUtilisateur.GetById((int)rec.UserId);
+            }
+            ViewBag.listReclamtion = lstRecl;
+
+            return View();
+        }
+
+
+            // GET: Reclamation
         public ActionResult Index()
         {
+            lstRecl = null;
+            UserVM userc = Session["userConnected"] as UserVM;
+            if (userc == null)
+                return RedirectToAction("Create", "Login");
+
             lstRecl = serviceReclamation.GetMany();
             foreach (var rec in lstRecl)
             {
                 rec.Utilisateur = serviceUtilisateur.GetById((int)rec.UserId);
             }
-                /*    lstRecl = serReclamation.GetMany();
-                    serReclamation.Dispose();
-                    foreach (var rec in lstRecl)
-                    {
-                        rec.Utilisateur = serUser.GetById((int)rec.UserId);
-                    }*/
+ 
                 return View(lstRecl);
         }
 
@@ -55,6 +64,11 @@ namespace ADVYTEAM.Presentation.Controllers
         // GET: Reclamation/Create
         public ActionResult Create()
         {
+            UserVM userc = Session["userConnected"] as UserVM;
+            if (userc == null)
+                return RedirectToAction("Create", "Login");
+            else
+
             return View();
         }
 
@@ -72,16 +86,19 @@ namespace ADVYTEAM.Presentation.Controllers
                     Description = reclamationVM.Description,
                     DateReclamation = DateTime.Now,
                     DateTraitement = null,
-                    Etat = false,
+                    Etat = 0,
                     UserId = userc.id
                     
                 };
+
+              //  serviceReclamation.Add(r);
+              //  serviceReclamation.Commit();
                 utilisateur user = serviceUtilisateur.GetById((int)userc.id);
                 user.Reclamations.Add(r);
                 serviceUtilisateur.Commit();
  
 
-                return RedirectToAction("Index");
+                return RedirectToAction("MesReclamation");
             }
             return View();
         }

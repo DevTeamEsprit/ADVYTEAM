@@ -1,5 +1,6 @@
 ﻿using ADVYTEAM.Data;
 using ADVYTEAM.Presentation.Models;
+using ADVYTEAM.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,14 @@ namespace ADVYTEAM.Presentation.Controllers
         HttpClient Client;
         HttpResponseMessage responce;
         utilisateur user;
+        IUtilisateurService serviceUtilisateur;
+        IList<UserVM> lstcontact;
+
+        public LoginController()
+        {
+            serviceUtilisateur = new UtilisateurService();
+            lstcontact = new List<UserVM>();
+        }
         // GET: Login
         public ActionResult Index()
         {
@@ -53,7 +62,20 @@ namespace ADVYTEAM.Presentation.Controllers
                     id = user.id
                 };
                 Session["userConnected"] = u;
-              
+
+                foreach (utilisateur user in serviceUtilisateur.GetMany())
+                {
+                    lstcontact.Add(new UserVM()
+                    {
+                        id = user.id,
+                        nom = user.nom,
+                        prenom = user.prenom,
+                        image = user.image
+                    });
+                }
+
+                Session["lstContact"] = lstcontact;
+
                 return Redirect("~/Publication/Index");
                 
             }
@@ -64,6 +86,12 @@ namespace ADVYTEAM.Presentation.Controllers
         public ActionResult LogOff()
         {
             Session.Contents.RemoveAll();
+
+            return RedirectToAction("Create");
+        }
+
+        public ActionResult Password()
+        {
 
             return RedirectToAction("Create");
         }

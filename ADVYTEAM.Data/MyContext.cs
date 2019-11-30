@@ -275,12 +275,12 @@ namespace ADVYTEAM.Data
 
             modelBuilder.Entity<utilisateur>()
                 .HasMany(e => e.messages)
-                .WithOptional(e => e.utilisateur)
+                .WithOptional(e => e.sender)
                 .HasForeignKey(e => e.id_sender);
 
             modelBuilder.Entity<utilisateur>()
                 .HasMany(e => e.messages1)
-                .WithOptional(e => e.utilisateur1)
+                .WithOptional(e => e.receiver)
                 .HasForeignKey(e => e.id_receiver);
 
             modelBuilder.Entity<utilisateur>()

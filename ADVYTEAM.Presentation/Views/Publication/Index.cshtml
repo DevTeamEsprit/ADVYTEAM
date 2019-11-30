@@ -2,6 +2,7 @@
 @{
 
     UserVM userc = Session["userConnected"] as UserVM;
+    
 
 }
 <!-- Main content -->
@@ -16,8 +17,7 @@
                     <div class="card-header">
                         <div class="user-block">
                             <img class="img-circle"
-                                 src="data:image/jpeg;base64,@userc.image"
-                                 alt="User Image" />
+                                 src="data:image/jpeg;base64,@userc.image" alt="User Image" />
                             <span class="username">
                                 <a href="#">
                                     créer
@@ -43,19 +43,26 @@
 
                                 <span class="description">
                                     Shared publicly - @p.dateCreation
-                                    
+
                                 </span>
                             </div>
                             <!-- /.user-block -->
-                            <div class="card-tools">
-                                @Html.ActionLink("Delete", "Delete", new { id = @p.id })
-                                <button type="button" class="btn btn-tool" data-widget="collapse">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" data-widget="remove">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
+                            @if (userc.id==@p.user.id)
+                            {
+
+                                <div class="card-tools">
+
+                                    <a href="@Url.Action("Edit", "Publication", new { id = @p.id })" class="btn btn-tool" data-widget="remove">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="@Url.Action("Delete", "Publication", new { id = @p.id })" class="btn btn-tool" data-widget="remove" onclick="return confirm('Are you sure you want to delete this item?');">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+
+
+                                </div>
+                            }
+
                             <!-- /.card-tools -->
                         </div>
                         <!-- /.card-header -->
@@ -81,37 +88,62 @@
                                     <div class="comment-text">
                                         <span class="username">
                                             @com.user.prenom @com.user.nom
-                                            <span class="text-muted float-right">@com.dateCreation</span>
-                                        </span> 
+
+                                            @if (userc.id == @com.user.id)
+                                            {
+                                                <span class="text-muted float-right">
+                                                    <a href="@Url.Action("Delete", "Commentaire", new { id = @com.id })" onclick="return confirm('Are you sure you want to delete this item?');">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </span>
+                                                <span class="text-muted float-right">
+                                                    <a href="#">
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <i class="fas fa-edit"></i>
+                                                        &nbsp;&nbsp;
+
+                                                    </a>
+
+                                                </span>
+                                            }
+                                                <span class="text-muted float-right">@com.dateCreation</span>
+
+
+
+
+
+
+                                            </span> 
                                         @com.description .
                                     </div>
-                                     
-                                </div>
-                                 
+                                </div>                       
                             } 
                             </div>
                         <!-- /.card-footer -->
                         <div class="card-footer">
-                            <form action="#" method="post">
-                                <img class="img-fluid img-circle img-sm" src="data:image/jpeg;base64,@userc.image" alt="Alt Text">
-                                <!-- .img-push is used to add margin to elements next to floating images -->
-                                <div class="img-push">
-                                    <input type="text" class="form-control form-control-sm" placeholder="Press enter to post comment">
+
+                            <form class="form-horizontal" action="@Url.Action("Create", "Commentaire")"  method="get">
+                                <div class="input-group input-group-sm mb-0">
+                                    <img class="img-fluid img-circle img-sm" src="data:image/jpeg;base64,@userc.image" alt="Alt Text">
+                                    <input id="idpub" name="idpub" value="@p.id" style="display: none;" >
+                                    <input id="description" name="description" class="form-control form-control-sm" placeholder="Response">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-danger">Commenter</button>
+                                    </div>
                                 </div>
                             </form>
+
+
+ 
+
                         </div>
                         <!-- /.card-footer -->
                     </div>
                     <!-- /.card -->
                 }
             </div>
- 
-
-        </div>
-
+         </div>
     </div>
-
-
 </section>
 
 

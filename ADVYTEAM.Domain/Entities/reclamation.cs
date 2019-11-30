@@ -16,7 +16,7 @@ namespace ADVYTEAM.Domain.Entities
         public string Description { get; set; }
         public DateTime DateReclamation { get; set; }
         public DateTime? DateTraitement { get; set; }
-        public bool Etat { get; set; }
+        public int Etat { get; set; }
 
         public long? UserId { get; set; }
 
