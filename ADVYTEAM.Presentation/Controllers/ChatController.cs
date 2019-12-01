@@ -173,5 +173,10 @@ namespace ADVYTEAM.Presentation.Controllers
                 return View();
             }
         }
+
+        public ActionResult ChatRoom()
+        {
+            return View();
+        }
     }
 }

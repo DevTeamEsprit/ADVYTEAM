@@ -13,10 +13,11 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title></title>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
+    @Scripts.Render("~/bundles/jquery")
     @Styles.Render("~/template/css")
+    @Scripts.Render("~/bundles/bootstrap")
     @*<title>@ViewBag.Title - ADVYTEAM</title>*@
- 
+
 
 
 </head>
@@ -183,8 +184,7 @@
     @Scripts.Render("~/template/script")
     @RenderSection("scripts", required: false)
     @RenderSection("MyScripts", required: false)
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    
 
 
 </body>

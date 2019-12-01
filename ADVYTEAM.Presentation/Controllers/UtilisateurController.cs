@@ -4,6 +4,7 @@ using ADVYTEAM.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
@@ -44,13 +45,25 @@ namespace ADVYTEAM.Presentation.Controllers
         public ActionResult Profile()
         {
             UserVM userc = Session["userConnected"] as UserVM;
-            utilisateur user = serviceUtilisateur.Get(u=>u.id==(int)userc.id);
-      
+            utilisateur user = serviceUtilisateur.Get(u => u.id == (int)userc.id);
+
+            HttpClient Client = new HttpClient();
+            Client.BaseAddress = new Uri("http://localhost:9080");
+            Client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage responce = Client.GetAsync("/PIDEV-web/PIDEV/gestionEmploye/publication/user/"+userc.id).Result;
+
+            if (responce.IsSuccessStatusCode)
+            {
+                IEnumerable<PublicationVM> lstPub = responce.Content.ReadAsAsync<IEnumerable<PublicationVM>>().Result;
+                ViewBag.publications = lstPub;
+            }
+
+
             user.contrat = contratService.Get(contrat=> contrat.reference==(int)user.contrat_reference);
-        //    user.publications = publicationService.GetMany(publication=>publication.id_user==user.id).ToList();
+         
             ViewBag.user = user;
 
-            return View(user);
+            return View();
         }
     }
 }
