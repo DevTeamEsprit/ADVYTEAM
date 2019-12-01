@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_templateLayout.cshtml";
+}
+
+ 
+
+<br />
+<br />
+<section class="content">
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+
+
+                    <!-- Profile Image -->
+                    <div class="card card-primary card-outline">
+                        <div class="card-body box-profile">
+                            <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle"
+                                     src="data:image/png;base64,@ViewBag.user.image"
+                                     alt="User profile picture" />
+                            </div>
+
+                            <h3 class="profile-username text-center">
+                                @ViewBag.user.nom - @ViewBag.user.prenom
+                            </h3>
+
+
+
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <i class="fa fa-map-marker mr-1"></i><b>Adresse</b>
+                                    <a class="pull-right"> @ViewBag.user.adresse </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fa fa-phone mr-1"></i><b>
+                                        Némuro
+                                        tel
+                                    </b> <a class="pull-right">  @ViewBag.user.tel </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fa fa-book mr-1"></i><b>Email</b>
+                                    <a class="pull-right">  @ViewBag.user.email </a>
+                                </li>
+                            </ul>
+                            <form enctype="multipart/form-data">
+
+
+
+                                @*<div class="input-group">
+                                        <div class="custom-file">
+                                            <p:fileUpload id="imf" value="#{utilisateurbean.file}"
+                                                          mode="simple" skinSimple="true" class="custom-file-input" />
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div>
+
+                                    </div>*@
+
+
+
+
+                                @*<h:commandLink action="#{utilisateurbean.changerImage}"
+                                                   class="btn btn-primary btn-block">
+                                        <i class="fal fa-portrait"></i> Photo de profil
+                                    </h:commandLink>*@
+                            </form>
+                        </div>
+
+                    </div>
+                    <!-- /.card -->
+                    <!-- /.card -->
+                    <!-- About Me Box -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Contrat</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <strong><i class="fa fa-book mr-1"></i> Type Contrat</strong>
+
+                            <p class="text-muted"> @ViewBag.user.contrat.typeContrat </p>
+
+                            <hr></hr>
+
+                            <strong>
+                                <i class="fa fa-calendar mr-1"></i> Date de
+                                debut
+                            </strong>
+
+                            <p class="text-muted"> @ViewBag.user.contrat.dateDebut </p>
+
+                            <hr>
+
+                            <strong><i class="fa fa-calendar mr-1"></i> Date de fin</strong>
+
+
+                            <p class="text-muted"> @ViewBag.user.contrat.dateFin </p>
+
+
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+
+
+                </div>
+
+                <!-- /.col -->
+                <div class="col-md-9">
+                    <div class="card">
+                        @{Html.RenderPartial("Index","Publication");}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

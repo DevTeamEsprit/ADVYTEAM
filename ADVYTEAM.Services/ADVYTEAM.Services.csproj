@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="ContratService.cs" />
+    <Compile Include="IContratService.cs" />
     <Compile Include="IMessageService.cs" />
     <Compile Include="IPublicationService.cs" />
     <Compile Include="IReclamationService.cs" />

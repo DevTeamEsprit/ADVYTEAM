@@ -175,6 +175,7 @@
     <Compile Include="Controllers\PublicationController.cs" />
     <Compile Include="Models\CommentaireVM.cs" />
     <Compile Include="Models\LoginVM.cs" />
+    <Compile Include="Models\oubliePass.cs" />
     <Compile Include="Models\PublicationVM.cs" />
     <Compile Include="Models\ReclamationVM.cs" />
     <Compile Include="Models\UserVM.cs" />
@@ -2970,10 +2971,12 @@
     <Content Include="Views\Chat\Details.cshtml" />
     <Content Include="Views\Reclamation\MesReclamation.cshtml" />
     <Content Include="Views\Reclamation\Index.cshtml" />
+    <Content Include="Views\Login\OubliePassword.cshtml" />
+    <Content Include="Views\Login\newPassword.cshtml" />
+    <Content Include="Views\Utilisateur\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Utilisateur\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

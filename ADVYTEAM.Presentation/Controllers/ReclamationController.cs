@@ -11,12 +11,12 @@ namespace ADVYTEAM.Presentation.Controllers
     public class ReclamationController : Controller
     {
  
-             IEnumerable<reclamation> lstRecl;
+        IEnumerable<reclamation> lstRecl;
         IEnumerable<reclamation> lstReclt;
         IEnumerable<reclamation> lstReclc;
         IEnumerable<reclamation> lstRecln;
         IReclamationService serviceReclamation;
-             IUtilisateurService serviceUtilisateur;
+        IUtilisateurService serviceUtilisateur;
 
         public ReclamationController()
         {
