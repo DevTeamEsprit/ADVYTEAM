@@ -44,7 +44,7 @@
 
                                 <div class="panel-body" id="chat" style="height:250px;">
                                     <input type="hidden" id="displayname" value="@userc.nom @userc.prenom" />
-
+                                    
                                     <p id="discussion"></p>
                                 </div>
 
@@ -81,38 +81,27 @@
             // Reference the auto-generated proxy for the hub.
             var chat = $.connection.chatHub;
             // Create a function that the hub can call back to display messages.
-            chat.client.addNewMessageToPage = function (name, message) {
+            chat.client.addNewMessageToPage = function (name, message,dt,image) {
                 if (name !="@userc.nom @userc.prenom") {
-
-
-
                     $('#discussion').append('<div class="direct-chat-msg">'+
                         '<div class="direct-chat-info clearfix">'+
-                          '<span class="direct-chat-name float-left">'+"Alexander Pierce"+'</span>'+
-                          '<span class="direct-chat-timestamp float-right">'+"23 Jan 2:00 pm"+'</span>'+
+                          '<span class="direct-chat-name float-left">'+ htmlEncode(name) +'</span>'+
+                          '<span class="direct-chat-timestamp float-right">'+ htmlEncode(dt)+'</span>'+
                         '</div>'+
-
-                        '<img class="direct-chat-img" src="https://www.phplivesupport.com/pics/icons/avatars/public/avatar_7.png" alt="message user image">'+
-
+                        '<img class="direct-chat-img" src="data:image/png;base64,'+ htmlEncode(image) +'" alt="message user image">'+
                         '<div class="direct-chat-text">'+ htmlEncode(message) +
                         '</div>'+
                       '</div>');
-
-
-
                 }
                 else if (name == "@userc.nom @userc.prenom") {
 
                     $('#discussion').append('<div class="direct-chat-msg right">'+
                         '<div class="direct-chat-info clearfix">'+
                           '<span class="direct-chat-name float-right">'+ "@userc.prenom  @userc.nom" +'</span>'+
-                          '<span class="direct-chat-timestamp float-left">'+ "23 Jan 2:05 pm" +'</span>'+
+                          '<span class="direct-chat-timestamp float-left">'+  htmlEncode(dt)  +'</span>'+
                         '</div>'+
-
                         '<img class="direct-chat-img" src="data:image/png;base64,@userc.image" alt="message user image">'+
-
                         '<div class="direct-chat-text">'+    htmlEncode(message)  +   '</div></div>');
-
                 }
             };
 
@@ -122,7 +111,7 @@
             $.connection.hub.start().done(function () {
                 $('#sendmessage').click(function () {
                     // Call the Send method on the hub.
-                   chat.server.send($('#displayname').val(), $('#message').val());
+                   chat.server.send($('#displayname').val(), $('#message').val(),"@userc.id");
                     // Clear text box and reset focus for next comment.
                     $('#message').val('').focus();
                 });
