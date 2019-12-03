@@ -12,7 +12,7 @@ namespace ADVYTEAM.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public quizquestion()
         {
-            questionresponses = new HashSet<questionresponse>();
+            responses = new HashSet<questionresponse>();
         }
 
         public int id { get; set; }
@@ -23,7 +23,7 @@ namespace ADVYTEAM.Data
         public long? quiz_id { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<questionresponse> questionresponses { get; set; }
+        public virtual ICollection<questionresponse> responses { get; set; }
 
         public virtual quiz quiz { get; set; }
     }

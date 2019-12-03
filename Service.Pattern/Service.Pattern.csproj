@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="FeedbackService.cs" />
+    <Compile Include="IFeedbackService.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service.cs" />
@@ -50,6 +52,10 @@
     <ProjectReference Include="..\ADVYTEAM.Data\ADVYTEAM.Data.csproj">
       <Project>{c0359a5b-ff93-425e-98f1-01faf6c660f2}</Project>
       <Name>ADVYTEAM.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ADVYTEAM.Domain\ADVYTEAM.Domain.csproj">
+      <Project>{1F75C644-E03D-48B1-97A8-6A63A83ABFBF}</Project>
+      <Name>ADVYTEAM.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

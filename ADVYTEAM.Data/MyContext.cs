@@ -165,7 +165,7 @@ namespace ADVYTEAM.Data
                 .HasForeignKey(e => e.quiz_id);
 
             modelBuilder.Entity<quiz>()
-                .HasMany(e => e.quizquestions)
+                .HasMany(e => e.questions)
                 .WithOptional(e => e.quiz)
                 .HasForeignKey(e => e.quiz_id);
 
@@ -174,7 +174,7 @@ namespace ADVYTEAM.Data
                 .IsUnicode(false);
 
             modelBuilder.Entity<quizquestion>()
-                .HasMany(e => e.questionresponses)
+                .HasMany(e => e.responses)
                 .WithOptional(e => e.quizquestion)
                 .HasForeignKey(e => e.question_id);
 
@@ -189,7 +189,7 @@ namespace ADVYTEAM.Data
             modelBuilder.Entity<skill>()
                 .HasMany(e => e.quizs)
                 .WithOptional(e => e.skill)
-                .HasForeignKey(e => e.skill_id);
+                .HasForeignKey(e => e.skillId);
 
             modelBuilder.Entity<skill>()
                 .HasMany(e => e.userskills)

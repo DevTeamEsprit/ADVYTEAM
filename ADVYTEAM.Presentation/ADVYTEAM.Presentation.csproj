@@ -163,16 +163,22 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\QuizController.cs" />
+    <Compile Include="Controllers\QuizSessionController.cs" />
     <Compile Include="Controllers\ReclamationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Controllers\PublicationController.cs" />
     <Compile Include="Models\CommentaireVM.cs" />
+    <Compile Include="Models\FeedbackVM.cs" />
     <Compile Include="Models\LoginVM.cs" />
     <Compile Include="Models\PublicationVM.cs" />
+    <Compile Include="Models\QuizSessionVM.cs" />
+    <Compile Include="Models\QuizSelectionVM.cs" />
     <Compile Include="Models\ReclamationVM.cs" />
     <Compile Include="Models\UserVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -202,6 +208,7 @@
     <Content Include="Content\build\npm\Publish.js" />
     <Content Include="Content\build\test.js" />
     <Content Include="Content\css\main.css" />
+    <Content Include="Content\css\quiz.css" />
     <Content Include="Content\css\util.css" />
     <Content Include="Content\dist\css\adminlte.css" />
     <Content Include="Content\dist\css\adminlte.min.css" />
@@ -2961,6 +2968,13 @@
     <Content Include="Views\Shared\_templateLayout.cshtml" />
     <Content Include="Views\Publication\Create.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\Quiz\Index.cshtml" />
+    <Content Include="Views\Quiz\Create.cshtml" />
+    <Content Include="Views\Quiz\QuizSelection.cshtml" />
+    <Content Include="Views\QuizSession\QuizSession.cshtml" />
+    <Content Include="Views\QuizSession\Details.cshtml" />
+    <Content Include="Views\Feedback\Create.cshtml" />
+    <Content Include="Views\QuizSession\FinishQuiz.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

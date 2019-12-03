@@ -1,0 +1,109 @@
+﻿@model ADVYTEAM.Presentation.Models.QuizSessionVM
+
+@{ ViewBag.Title = "QuizSession"; }
+
+<head>
+    <link rel="stylesheet" type="text/css" href="@Url.Content(" /css/quiz.css ")" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/quiz.css" />
+</head>
+<h2>QuizSession</h2>
+<div class="mx-auto container-fluid" style="width: 700px;">
+    <div class="row justify-content-center">
+        <br>
+        <div class="col-md-12">
+            <input type="hidden" name="category-selection-form" value="category-selection-form">
+            <div class="container-fluid bg-Dinfo">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>
+                                <span class="label label-warning" id="qid">
+                                @(Model.selectedQuiz.currentQuestionIndex + 1)</span> 
+                                @Model.selectedQuiz.quiz.questions.ElementAt(Model.selectedQuiz.currentQuestionIndex ?? default(int)).content
+
+                            </h3>
+                        </div>
+                        <div class="modal-body">
+                            <center>
+                                @{ int i = 1;} @foreach (var r in Model.selectedQuiz.quiz.questions.ElementAt(Model.selectedQuiz.currentQuestionIndex ?? default(int)).responses)
+                                {
+
+                                <label class="element-animation1 btn btn- btn-block">
+                                    <span class="btn-label">
+                                        <i class="glyphicon glyphicon-chevron-right"></i>
+                                    </span>
+
+                                    @if (r.isChecked)
+                                    {
+                                        <input id="@(r.id)" checked type="checkbox" style="margin-right: 1px" onclick="toggleResponse(this)"> @(i++ + ": " + r.content)
+                                    }
+                                    else
+                                    {
+                                        <input id="@(r.id)" type="checkbox" style="margin-right: 1px" onclick="toggleResponse(this)"> @(i++ + ": " + r.content)
+                                    }
+
+
+                                </label>
+                                }
+
+                                    <div class="form-group">
+                                @using (Html.BeginForm("GoPrevious", "QuizSession", new { Model }, FormMethod.Post))
+                                {
+                                    if (Model.HasPrevious)
+                                    {
+                                                <input formaction="/QuizSession/LoadQuizSession?incQIndex=-1&skillId=@Model.skillId" type="submit" value="Previous" name="@Model" id="previousQuestionId" class="btn btn-default" onclick="start-Quiz" />
+                                    }
+                                    if (Model.HasNext)
+                                    {
+                                                <input formaction="/QuizSession/LoadQuizSession?skillId=@Model.skillId" type="submit" value="Next" name="@Model" id="nextQuestionId" class="btn btn-default" onclick="start-Quiz" />
+                                    }
+                                    else
+                                    {
+                                                <input formaction="/QuizSession/FinishQuiz" type="submit" value="Finish" name="@Model" id="finishQuizId" class="btn btn-default" onclick="start-Quiz" />
+                                    }
+                                }
+                                </div>
+                                </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        function toggleResponse(responseObj) {
+
+            const toChecked = responseObj.checked;
+            const responseId = responseObj.id;
+
+            // Call controller to update response...
+
+            $.getJSON('@Url.Action("SetResponseCheck")', { responseId, toChecked },
+                function (msg) {
+                    console.log(msg);
+                });
+
+            console.log(responseId);
+        }
+
+        $("#Previous").click(function () {
+            var selectedQuestion = $("#qid").val();
+            $.getJSON('@Url.Action("hasPreviousQuestion")', { userQuiz: selectedQuestion },
+                function (skills) {
+                    if (skills != null && !jQuery.isEmptyObject(skills)) {
+                        var skillsSelect = $('#Skill');
+                        skillsSelect.empty();
+                        console.log(skills);
+                    };
+                });
+        });
+
+    </script>
+}

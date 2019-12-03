@@ -11,7 +11,7 @@ namespace ADVYTEAM.Data
     {
         public long id { get; set; }
 
-        public int? curr_question_index { get; set; }
+        public int? currentQuestionIndex { get; set; }
 
         public int score { get; set; }
 

@@ -15,6 +15,9 @@ namespace ADVYTEAM.Data
             userquizresponses = new HashSet<userquizresponse>();
         }
 
+        [NotMapped]
+        public bool isChecked = false;
+
         public int id { get; set; }
 
         [StringLength(255)]
