@@ -5,6 +5,8 @@ namespace ADVYTEAM.Data
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using ADVYTEAM.Data.Configurations;
+    
+
 
     public partial class MyContext : DbContext
     {
@@ -319,5 +321,7 @@ namespace ADVYTEAM.Data
         }
 
         public virtual System.Data.Entity.DbSet<ADVYTEAM.Domain.Entities.reclamation> reclamations { get; set; }
+
+       // public System.Data.Entity.DbSet<ADVYTEAM.Presentation.Models.FormationVM> FormationVMs { get; set; }
     }
 }

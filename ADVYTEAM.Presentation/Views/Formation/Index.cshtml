@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ADVYTEAM.Presentation.Models.FormationVM>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_templateLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "createformation")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.dateformation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.decription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nbrjour)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateformation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.decription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nbrjour)
+        </td>
+        <td>
+            @Html.ActionLink("updateformation", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

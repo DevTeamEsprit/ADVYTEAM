@@ -1,0 +1,43 @@
+﻿@model ADVYTEAM.Presentation.Models.FormationVM
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_templateLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>FormationVM</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.dateformation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateformation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.decription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.decription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nbrjour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nbrjour)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("updateformation", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
