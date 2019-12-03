@@ -59,7 +59,7 @@
                                     }
                                     else
                                     {
-                                                <input formaction="/QuizSession/FinishQuiz" type="submit" value="Finish" name="@Model" id="finishQuizId" class="btn btn-default" onclick="start-Quiz" />
+                                                <input formaction="/QuizSession/FinishQuiz?skillId=@Model.skillId" type="submit" value="Finish" name="@Model" id="finishQuizId" class="btn btn-default" onclick="start-Quiz" />
                                     }
                                 }
                                 </div>

@@ -17,6 +17,8 @@ namespace ADVYTEAM.Presentation.Controllers
         QuizSessionVM QsessionVm;
         long userId;
 
+        readonly int minRequiredScore = 80;
+
         // Used to save current quiz quesitons...
         userquiz userQuiz;
 
@@ -45,7 +47,7 @@ namespace ADVYTEAM.Presentation.Controllers
             if (incQIndex != 0)
             { 
                 this.userQuiz.currentQuestionIndex = this.userQuiz.currentQuestionIndex + incQIndex;
-                task = ReadAsStringAsync("PIDEV/gestionQuiz/updateQuestionIndex" + this.userQuiz.id + "/" + this.userQuiz.currentQuestionIndex);
+                task = ReadAsStringAsync("PIDEV/gestionQuiz/updateQuestionIndex/" + this.userQuiz.id + "/" + this.userQuiz.currentQuestionIndex);
                 task.Wait();
                 responseStr = task.Result;
             }
@@ -76,10 +78,84 @@ namespace ADVYTEAM.Presentation.Controllers
 
             return View("QuizSession", QsessionVm);
         }
-
-        public ActionResult FinishQuiz()
+        
+        public ActionResult FinishQuiz(int skillId)
         {
-            return View();
+            this.userQuiz = GetUserQuizBySkillId(skillId);
+
+            Task<string> task;
+            String responseStr;
+
+            QsessionVm.selectedQuiz = userQuiz;
+            QsessionVm.skillId = skillId;
+
+            float correctQuestionsCount = 0;
+            float questionsCount = this.userQuiz.quiz.questions.Count();
+
+            for (int qi = 0; qi < questionsCount; ++qi)
+            {
+                task = ReadAsStringAsync(
+                    "PIDEV/gestionQuiz/getUserQuestionResponses/"
+                    + this.userId + "/" + (int)this.userQuiz.quiz.questions.ElementAt(qi).id);
+                task.Wait();
+                responseStr = task.Result;
+                List<userquizresponse> uqrs = JsonConvert.DeserializeObject<List<userquizresponse>>(responseStr);
+                QsessionVm.userResponses = uqrs;
+
+                bool isCorrect = true;
+
+                for (int ri = 0; ri < uqrs.Count; ++ri)
+                {
+                    if (QsessionVm.selectedQuiz.quiz.questions.ElementAt(qi).responses.ElementAt(ri).isCorrect != uqrs[ri].isChecked)
+                    {
+                        isCorrect = false;
+                        break;
+                    }
+                }
+
+                if (isCorrect) ++correctQuestionsCount;
+            }
+
+            float correctAnswersPercentage = (int)(correctQuestionsCount / questionsCount) * 100;
+
+            int newScore = (int)correctAnswersPercentage;
+
+            task = ReadAsStringAsync("PIDEV/gestionQuiz/updateScore/" + this.userQuiz.quiz.id + "/" + userId + "/" + newScore);
+                        task.Wait();
+                        responseStr = task.Result;
+
+            //updateScore/{quizId}/{userId}/{score}
+
+            // Check if this percentage is enough to pass the quiz.
+            ViewBag.score = 0.0f;
+            ViewBag.requiredScore = this.minRequiredScore;
+
+            if (newScore >= minRequiredScore)
+            {
+                // Now, depending on the user type, we update skill level...
+
+                // Meaning an employee
+                if (true)
+                {
+                    task = ReadAsStringAsync("PIDEV/gestionQuiz/levelUpUserSkill/" + userId + "/" + skillId);
+                    task.Wait();
+                    responseStr = task.Result;
+
+                    ViewBag.score = newScore;
+
+                    return View(QsessionVm);
+                    //
+
+                }
+                else // Else, a candidate
+                {
+                    // Use calendar to schedule an meet-up
+
+                }
+
+            }
+
+            return View(QsessionVm);
         }
 
         public ActionResult SetResponseCheck(string responseId, string toChecked)

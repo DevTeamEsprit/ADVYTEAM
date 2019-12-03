@@ -1,7 +1,126 @@
-﻿
+﻿@model ADVYTEAM.Presentation.Models.QuizSessionVM
+
 @{
     ViewBag.Title = "FinishQuiz";
 }
 
+<head>
+    <link rel="stylesheet" type="text/css" href="@Url.Content(" /css/quiz.css ")" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/quiz.css" />
+</head>
+
 <h2>FinishQuiz</h2>
 
+<div class="content-wrapper" style="min-height: 571.125px;">
+    <section class="content">
+        <div class="container-fluid">
+
+            <div id="accordion">
+                <section class="write-review py-5 bg-light" id="write-review">
+                    <div class="mx-auto container-fluid" style="width: 700px;">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="row">
+
+
+
+                                    <div class="card">
+                                        <div class="card-header" id="headingOne">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    <div class="col-md-6">
+                                                        <h5>Overall Rating</h5>
+                                                        <h5>Quiz: @Model.selectedQuiz.quiz.title</h5>
+                                                    </div>
+
+
+
+
+                                                    <div class="col-md-6 text-warning">
+                                                        <i style="color: rgba(30,30,30,0.3)" class="fa fa-star"></i>
+                                                        <i style="color: rgba(30,30,30,0.3)" class="fa fa-star"></i>
+                                                        <i style="color: rgba(30,30,30,0.3)" class="fa fa-star"></i>
+                                                        <i style="color: rgba(30,30,30,0.3)" class="fa fa-star"></i>
+                                                        <i style="color: rgba(30,30,30,0.3)" class="fa fa-star"></i>
+                                                    </div>
+
+
+                                                </button>
+                                            </h5>
+                                        </div>
+
+                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                            <div class="card-body">Description: Java entreprise edition quiz level 1</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+
+
+
+                                <div id="accordation">
+
+                                    <div class="card">
+                                        <div class="card-header" id="question_0">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse_q_0" aria-expanded="false" aria-controls="collapse_q_0">
+
+                                                    <div class="col-md-8">
+                                                        Question 1:
+                                                        What is EJB
+                                                    </div>
+
+                                                </button>
+                                            </h5>
+                                        </div>
+                                        <div id="collapse_q_0" class="collapse" aria-labelledby="question_0" data-parent="#accordion">
+
+
+                                            <div class="card" style="margin: 30px; background-color: rgba(255, 26, 26, 0.7);">
+                                                <div class="card-header" id="question_0">
+                                                    <h5 class="mb-0"></h5>
+                                                    <div class="card-body">
+                                                        Entreprise Java Balancer
+                                                        <br>
+                                                        <h5>Great Job!</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="card" style="margin: 30px; background-color: rgba(255, 26, 26, 0.7);">
+                                                <div class="card-header" id="question_0">
+                                                    <h5 class="mb-0"></h5>
+                                                    <div class="card-body">
+                                                        Entreprise Java Bean
+                                                        <br>
+                                                        <h5>Great Job!</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <hr>
+                                <div class="row pt-3">
+                                    <div class="col-md-12"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <form id="j_idt21" name="j_idt21" method="post" action="/PIDEV-web/faces/skill/quiz_result.xhtml" enctype="application/x-www-form-urlencoded">
+                                    <input type="hidden" name="j_idt21" value="j_idt21">
+
+                                    <h6> You answered @ViewBag.score % correctly.</h6>
+                                    <p> Required @ViewBag.requiredScore % at least.</p><input id="j_idt21:retry" type="submit" name="j_idt21:retry" value="Retry?" class="btn btn-warning btn-block my-4"><input id="j_idt21:start-quiz-btn" type="submit" name="j_idt21:start-quiz-btn" value="Choose another Quiz" class="btn btn-success btn-block my-4"><input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:1" value="6958232213963986348:6835171003331699243" autocomplete="off">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+</div>
