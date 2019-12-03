@@ -1,0 +1,85 @@
+﻿@using ADVYTEAM.Presentation.Models
+@{
+    ViewBag.Title = "MesReclamation";
+    UserVM userc = Session["userConnected"] as UserVM;
+}
+
+<br />
+<h1>Mes réclamations</h1>
+<br />
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9">
+
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <div class="user-block">
+                            <img class="img-circle"
+                                 src="data:image/jpeg;base64,@userc.image" alt="User Image" />
+                            <span class="username">
+                                <a href="#">
+                                    Ajouter
+                                    une réclamation
+                                </a>
+                            </span>
+                        </div>
+
+                    </div>
+                    @{Html.RenderPartial("Create");}
+                </div>
+
+
+                <div class="card-body p-0">
+                    <ul class="products-list product-list-in-card pl-2 pr-2">
+                        @foreach (var p in ViewBag.listReclamtion)
+                        {
+                            <li class="item">
+                                <div class="product-img">
+
+                                    <img src="~/Content/logo.jpg" alt="Product Image" class="img-size-50">
+
+                                </div>
+                                <div class="product-info">
+                                    <a href="javascript:void(0)" class="product-title">
+                                        Objet :   @p.Objet
+
+                                        @if (@p.Etat == 0)
+                                        {
+                                            <span class="badge badge-warning float-right">En attent </span>
+                                        }
+                                        else if (@p.Etat == 1)
+                                        {
+                                            <span class="badge badge-info float-right">En Cour de traitement</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-success float-right">traitée</span>
+                                        }
+
+                                    </a>
+                                    <span class="product-description">
+                                        Description:   @p.Description
+                                    </span>
+
+
+                                </div>
+
+                                <span class="text-muted float-right">Date réclamation @p.DateReclamation</span>
+                            </li>
+                        }
+                    </ul>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+</section>

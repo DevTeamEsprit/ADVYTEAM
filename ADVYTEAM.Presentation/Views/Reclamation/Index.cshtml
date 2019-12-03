@@ -1,57 +1,153 @@
-﻿@model IEnumerable<ADVYTEAM.Domain.Entities.reclamation>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Objet)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateReclamation)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateTraitement)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Etat)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Utilisateur.type)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Objet)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateReclamation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateTraitement)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Etat)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Utilisateur.type)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+﻿
+@{
+    ViewBag.Title = "Index";
 }
 
-</table>
+<br />
+<h3>Liste des réclamations</h3>
+<br />
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-10">
+                <!-- Custom Tabs -->
+                <div class="card">
+                    <div class="card-header d-flex p-0">
+                        <h3 class="card-title p-3"> </h3>
+                        <ul class="nav nav-pills ml-auto p-2">
+                            <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">En attent</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">En cour de traitement</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">traitée</a></li>
+                        </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1">
+                                @foreach (var p in ViewBag.reclamationAttnte)
+                                {
+                                    <div class="card card-widget">
+                                        <div class="card-header">
+                                            <div class="user-block">
+                                                <img class="img-circle" src="data:image/jpeg;base64,@p.Utilisateur.image" alt="User Image">
+                                                <span class="username">
+                                                    <a href="#">@p.Utilisateur.prenom @p.Utilisateur.nom </a>
+
+                                                </span>
+
+                                                <span class="description">
+                                                    Date réclamation - @p.DateReclamation
+
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <p>
+                                                Objet: @p.Objet
+                                            </p>
+
+                                            <div class=" card-comments">
+                                                <div class="comment-text">
+                                                    Description :   @p.Description
+                                                </div>
+                                            </div>
+
+                                            @*<a href="@Url.Action("updateRecl", "Reclamation", new { id = @p.Id })" class="badge badge-warning float-right" data-widget="remove">
+                                                traiter 
+                                            </a>*@
+                                        <button type="button" onclick="location.href='@Url.Action("updateRecl", "Reclamation", new { id = @p.Id })'" class="badge badge-warning float-right">
+                                            traiter
+                                        </button>
+                                        </div>
+
+                                    </div>
+
+                                }
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="tab_2">
+                                @foreach (var p in ViewBag.reclamationCours)
+                                {
+                                    <div class="card card-widget">
+                                        <div class="card-header">
+                                            <div class="user-block">
+                                                <img class="img-circle" src="data:image/jpeg;base64,@p.Utilisateur.image" alt="User Image">
+                                                <span class="username">
+                                                    <a href="#">@p.Utilisateur.prenom @p.Utilisateur.nom </a>
+
+                                                </span>
+
+                                                <span class="description">
+                                                    Date réclamation - @p.DateReclamation
+
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <p>
+                                                Objet: @p.Objet
+                                            </p>
+
+                                            <div class=" card-comments">
+                                                <div class="comment-text">
+                                                    Description :   @p.Description
+                                                </div>
+                                            </div>
+
+                                       
+                                            <button type="button" onclick="location.href='@Url.Action("updateRecl", "Reclamation", new { id = @p.Id })'" class="badge badge-info float-right">
+                                                traiter
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                }
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="tab_3">
+                                @foreach (var p in ViewBag.reclamationTraite)
+                                {
+                                    <div class="card card-widget">
+                                        <div class="card-header">
+                                            <div class="user-block">
+                                                <img class="img-circle" src="data:image/jpeg;base64,@p.Utilisateur.image" alt="User Image">
+                                                <span class="username">
+                                                    <a href="#">@p.Utilisateur.prenom @p.Utilisateur.nom </a>
+
+                                                </span>
+
+                                                <span class="description">
+                                                    Date réclamation - @p.DateReclamation
+                                                    Date traitement - @p.DateTraitement
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <p>
+                                                Objet: @p.Objet
+                                            </p>
+                                            <div class=" card-comments">
+                                                <div class="comment-text">
+                                                    Description @p.Description
+                                                </div>
+                                            </div>
+ 
+                                        </div>
+
+                                    </div>
+
+                                }
+
+                            </div>
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- ./card -->
+            </div>
+            <!-- /.col -->
+        </div>
+
+    </div>
+</section>

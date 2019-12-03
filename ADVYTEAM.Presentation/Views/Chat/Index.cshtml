@@ -1,0 +1,139 @@
+﻿@model ADVYTEAM.Presentation.Models.UserVM
+ 
+<br />
+<br />
+<div class="col-md-9">
+    <!-- DIRECT CHAT PRIMARY -->
+    <div class="card card-primary card-outline direct-chat direct-chat-primary">
+        <div class="card-header">
+
+            <h3 class="card-title">
+                <img class="direct-chat-img" src="data:image/png;base64,@Html.DisplayFor(userVm => userVm.image)" alt="message user image" />
+                @Html.DisplayFor(userVm => userVm.prenom)
+                @Html.DisplayFor(userVm => userVm.nom)
+
+            </h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+
+            <!-- Conversations are loaded here -->
+            <div id="direct-chat-messages" class="direct-chat-messages scrollbar-chat"></div>
+            <!--/.direct-chat-messages-->
+
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <form name="formChat" id="formChat" method="get">
+                <div class="input-group">
+                    <input type="text" name="message" id="message" placeholder="Type Message ..." class="form-control" />
+                    <span class="input-group-append">
+                        <button type="button" id="btn-send-message" class="btn btn-primary">Send</button>
+                    </span>
+                </div>
+            </form>
+        </div>
+        <!-- /.card-footer-->
+    </div>
+</div>
+@section MyScripts
+{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            document.getElementById("message").focus();
+            let scrolled = false;
+
+            function uploadScroll() {
+                console.log(scrolled)
+                if (!scrolled) {
+
+                    var element = document.getElementById("direct-chat-messages");
+                    element.scrollTop = element.scrollHeight;
+                }
+            }
+
+            function getMessages() {
+		        $formChat = $("#formChat").serialize();
+		        $.ajax({
+			        async : false,
+			        type : "POST",                              
+                    url: '@Url.Action("discussion", "Chat")',          
+			        data : $formChat,
+			        success : function(msg) {
+				        $('#direct-chat-messages').html(msg);
+			        }
+		        });
+
+		        uploadScroll();
+	        }
+            setInterval(function () {
+                    getMessages();               
+                uploadScroll();
+            }, 2000);
+
+            function sendMessage() {
+		        $formChat = $("#formChat").serialize();
+		        $.ajax({
+			        async : false,
+                    type: "POST",
+                    url: '@Url.Action("envoiMessage", "Chat")', 
+			        data : $formChat,
+			        success : function(msg) {
+				        $('#direct-chat-messages').html(msg);
+				        $("#message").val("");
+				        var element = document.getElementById("direct-chat-messages");
+				        element.scrollTop = element.scrollHeight;
+			        }
+		        });
+	        }
+
+	    $("#direct-chat-messages").on('scroll', function() {
+		    scrolled = false;
+	    });
+
+	    getMessages();
+
+	    $("#message").keydown(function(e) {
+		    if (e.keyCode == 13) {
+			    if ($("#message").val() != '') {
+				    sendMessage();
+				    return false;
+			    }
+		    }
+	    });
+
+	    $("#btn-send-message").click(function() {
+		    if ($("#message").val() != '') {
+			    sendMessage();
+		    }
+	    });
+	    $("#direct-chat-messages").height($('body').height()-300);
+
+	    /*
+	    function asideHeight() {
+		    if ($(".content-wrapper").height() > $(window).height()) {
+			    $(".control-sidebar").height($(window).height());
+		    } else {
+			    $(".control-sidebar").height($(window).height() - 57);
+		    }
+	    }
+	    */
+	    //asideHeight();
+	    $(".control-sidebar").height($(window).height() - 57);
+	    window.onscroll = function () {
+		    if ($('.control-sidebar').is(':visible')) {
+			    $(".control-sidebar").css({ position: "fixed" });
+			    if (document.body.scrollTop > 57 || document.documentElement.scrollTop > 57) {
+				    $(".control-sidebar").css({ top: "0px" });
+			    } else {
+				    $(".control-sidebar").css({ position: "", top: "57px" });
+			    }
+		    } else {
+			    $(".control-sidebar").css({ position: "" });
+		    }
+
+	    };
+        })
+    </script>
+}

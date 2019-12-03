@@ -18,9 +18,27 @@ namespace ADVYTEAM.Services
 
         public ReclamationService() : base(utk)
         {
-
+            //GetMany(reclamation=>reclamation.UserId== userc.id);
         }
 
-         
+        public IEnumerable<reclamation> GetMesReclmations(long id)
+        {
+            return GetMany(reclamation => reclamation.UserId == id);
+        }
+
+        public IEnumerable<reclamation> GetReclmationsAttent()
+        {
+            return GetMany(reclamation => reclamation.Etat== 0);
+        }
+
+        public IEnumerable<reclamation> GetReclmationsEnCour()
+        {
+            return GetMany(reclamation => reclamation.Etat == 1);
+        }
+
+        public IEnumerable<reclamation> GetReclmationsTraite()
+        {
+            return GetMany(reclamation => reclamation.Etat == 2);
+        }
     }
 }

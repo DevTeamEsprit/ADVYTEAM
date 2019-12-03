@@ -1,0 +1,23 @@
+﻿@using ADVYTEAM.Presentation.Models
+@{
+
+    List<UserVM> lstcontact = Session["lstContact"] as List<UserVM>;
+
+}
+
+
+@foreach (var p in lstcontact)
+{
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex aside-contact">
+        <div class="image">
+            <img src="data:image/png;base64,@p.image"
+                 class="img-circle elevation-2" alt="User Image" />
+        </div>
+        <div class="info">
+            <a href="@Url.Action("Index", "Chat", new { idreciver = @p.id })" class="d-block">
+                @p.nom @p.prenom
+            </a>
+        </div>
+    </div>
+}
+

@@ -12,6 +12,7 @@ namespace ADVYTEAM.Presentation.Models
         public DateTime? dateCreation { get; set; }
         public string description { get; set; }
 
+        public virtual PublicationVM pub { get; set; }
        // public long? id_user { get; set; }
 
         public virtual utilisateur user { get; set; }
