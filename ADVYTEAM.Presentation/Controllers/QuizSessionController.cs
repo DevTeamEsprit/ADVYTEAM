@@ -41,6 +41,12 @@ namespace ADVYTEAM.Presentation.Controllers
         public ActionResult LoadQuizSession(int skillId, int incQIndex = 0)
         {
             this.userQuiz = GetUserQuizBySkillId(skillId);
+
+            // No quiz for such level on this skill for this user...
+            if(userQuiz == null)
+                return RedirectToAction("QuizSelection", "Quiz");
+
+
             Task<string> task;
             String responseStr;
 
@@ -196,7 +202,14 @@ namespace ADVYTEAM.Presentation.Controllers
             task = ReadAsStringAsync("PIDEV/gestionQuiz/quizBySkillAndLevel/" + skillId + "/" + userSkill.level + 1);
             task.Wait();
             responseStr = task.Result;
-            long quizId = JsonConvert.DeserializeObject<quiz>(responseStr).id;
+
+
+            quiz quiz = JsonConvert.DeserializeObject<quiz>(responseStr);
+
+            if (quiz == null)
+                return null;
+
+            long quizId = quiz.id;
 
             // Test on quizInfo nullability, because they might don't have a quiz with such level (like last level)
 
