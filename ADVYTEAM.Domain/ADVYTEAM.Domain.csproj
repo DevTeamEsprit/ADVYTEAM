@@ -70,6 +70,9 @@
     <Compile Include="Entities\quizquestion.cs" />
     <Compile Include="Entities\reclamation.cs" />
     <Compile Include="Entities\skill.cs" />
+    <Compile Include="Entities\Survey.cs" />
+    <Compile Include="Entities\SurveyQuestEmploye.cs" />
+    <Compile Include="Entities\SurveyQuestion.cs" />
     <Compile Include="Entities\ticket.cs" />
     <Compile Include="Entities\userfeedback.cs" />
     <Compile Include="Entities\userquiz.cs" />

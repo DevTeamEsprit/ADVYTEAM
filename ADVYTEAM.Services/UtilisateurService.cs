@@ -19,5 +19,15 @@ namespace ADVYTEAM.Services
 
         }
 
+        public IEnumerable<utilisateur> GetEmployes()
+        {
+            return GetMany(s => s.type == "employe");
+        }
+
+        public IEnumerable<utilisateur> GetEmployesByman(int manid)
+        {
+            return GetMany(s => s.type == "employe" && s.manager_id == manid) ;
+        }
+
     }
 }

@@ -1,0 +1,43 @@
+﻿@model ADVYTEAM.Presentation.Models.SurveyQuestionVM
+
+@{
+    ViewBag.Title = "StatByQuestion";
+}
+
+<h2>Stats By Question</h2>
+
+<div>
+    <h4>Question : @Html.DisplayFor(model => model.question)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <div  id="chartContainer" style="height: 500px; width: 500px"></div>
+    </dl>
+</div>
+
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+   window.onload = function (){
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	theme: "light1", // "light1", "light2", "dark1", "dark2"
+	exportEnabled: true,
+	animationEnabled: true,
+	title: {
+		text: "Statistics"
+	},
+
+	data: [{
+		type: "pie",
+		startAngle: 180,
+		toolTipContent: "<b>{label}</b>: {y}",
+		showInLegend: "true",
+		legendText: "{label}",
+		indexLabel: "{label} - {y}",
+		dataPoints: @Html.Raw(ViewData["datapoints"])
+	}]
+});
+    chart.render();
+
+}
+</script>

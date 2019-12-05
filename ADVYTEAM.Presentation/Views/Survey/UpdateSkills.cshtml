@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "UpdateSkills";
+}
+
+<h2>UpdateSkills</h2>
+
+<b id="here">fdsfdsa</b>
+
+<script>
+     $(document).ready(function () {    
+            $('#here').click(function () {
+               // var employee_Name = $("#employes").val();
+                $.ajax({
+    type: "GET",
+    url: "UpdateSkills",
+    dataType: "json",
+
+    success: function(data) {
+         alert("success");
+    },
+    error: function(xhr,status,error){
+        console.log(error);
+    }
+});
+            });
+    });
+</script>

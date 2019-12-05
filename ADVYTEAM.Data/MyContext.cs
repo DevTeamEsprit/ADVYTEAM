@@ -5,6 +5,8 @@ namespace ADVYTEAM.Data
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using ADVYTEAM.Data.Configurations;
+    using ADVYTEAM.Domain.Entities;
+    using ADVYTEAM.Domain;
 
     public partial class MyContext : DbContext
     {
@@ -36,12 +38,16 @@ namespace ADVYTEAM.Data
         public virtual DbSet<userquizresponse> userquizresponses { get; set; }
         public virtual DbSet<userskill> userskills { get; set; }
         public virtual DbSet<utilisateur> utilisateurs { get; set; }
+        public virtual DbSet<Survey> surveys { get; set; }
+        public virtual DbSet<SurveyQuestEmploye> surveyquestemploye { get; set; }
+        public virtual DbSet<SurveyQuestion> surveyquestion { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //***************************
             modelBuilder.Configurations.Add(new ReclamationConfiguration());
-          
+           // modelBuilder.Configurations.Add(new SurveyQuestConfiguration());
+
             //***************************
             modelBuilder.Entity<category>()
                 .Property(e => e.description)

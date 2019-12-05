@@ -94,6 +94,10 @@
     <Compile Include="Migrations\201911171057412_reclam.designer.cs">
       <DependentUpon>201911171057412_reclam.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912042043221_survey.cs" />
+    <Compile Include="Migrations\201912042043221_survey.designer.cs">
+      <DependentUpon>201912042043221_survey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\myMigrationSQLGenerator.cs" />
     <Compile Include="MyContext.cs" />
@@ -115,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911171057412_reclam.resx">
       <DependentUpon>201911171057412_reclam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912042043221_survey.resx">
+      <DependentUpon>201912042043221_survey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

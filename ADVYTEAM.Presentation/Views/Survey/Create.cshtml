@@ -1,0 +1,143 @@
+﻿@model ADVYTEAM.Presentation.Models.SurveyVM
+@using ADVYTEAM.Data;
+
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create","Survey",FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4 id="survey">Survey</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label class="control-label col-md-2">Days of duration</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.duree, new { htmlAttributes = new { @class = "form-control" , @required = "true"} })
+            @Html.ValidationMessageFor(model => model.duree, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+
+        <div class="col-md-10">
+            <label class="control-label col-md-2">Employee</label> <select class="chosen" id="employes" name="employename">
+
+                @foreach (var std in ViewData["employes"] as IList<utilisateur>)
+                {
+                    <option>
+                        <b style="display :none">@std.id .</b>  @std.nom    @std.prenom
+                    </option>
+
+                }
+            </select>
+           <label class="control-label col-md-2"> Skills : </label><b id="skillslist"></b>
+        </div>
+    </div>
+   
+       
+            <label class="control-label col-md-2">Question</label><input class = "form-control" type="text" id="question"/><a class="btn-group" id="addquest" href="#">Add</a>
+        
+    <hr>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create"  class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div style="float:left">
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<div style="float:right">
+    <h4 style="font-weight:bold">Liste des questions</h4>
+    <ul id="questionlist">
+    </ul>
+    <button class="btn-group" id="clearlist">Clear</button>
+</div>
+
+
+
+<script type="text/javascript">
+   
+    $(document).ready(function () {
+        //$(".chosen").chosen();
+        $('#employes').change(function () {
+            var employee_Name = $("#employes").val();
+            console.log(employee_Name);
+            $('#skillslist').empty();
+            $.ajax({
+                type: "GET",
+                url: "UpdateSkills?userid=" + employee_Name,
+                dataType: "json",
+
+                success: function (data) {
+                    if (data != null && !jQuery.isEmptyObject(data)) {
+
+                        var skillsSelect = $('#skillslist');
+
+                        $.each(data, function (index, skill) {
+                            skillsSelect.append(skill.name + "  -");
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        $('#addquest').click(function () {
+            var questiontext = $("#question").val();
+            if (questiontext != "") {
+                $.ajax({
+                    type: "GET",
+                    url: "UpdateQuestions?text=" + questiontext,
+                    dataType: "json",
+
+                    success: function (data) {
+                        $("#questionlist").empty();
+                        $.each(data, function (index, question) {
+                            console.log(question.question);
+                            $("#questionlist").append($('<li>' + question.question + '</li>'));
+                        });
+                        
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    },
+                });
+                }
+        });
+        $('#clearlist').click(function () {
+            
+                $.ajax({
+                    type: "GET",
+                    url: "ClearQuestions",
+                    dataType: "json",
+
+                    success: function (data) {
+                        $("#questionlist").empty();
+                       
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    },
+                });
+               
+        });
+            });
+   
+    
+   
+
+    </script>

@@ -1,0 +1,58 @@
+﻿@model ADVYTEAM.Presentation.Models.SurveyVM
+@using ADVYTEAM.Domain.Entities;
+
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Survey of  @Html.DisplayFor(model => model.employee_Name) ( @Html.DisplayFor(model => model.date) /   @Html.DisplayFor(model => model.duree)  jours)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @{int i = 1;}
+        @foreach (var std in ViewData["questions"] as IList<SurveyQuestion>)
+        {
+
+            <dd>Question  @i :</dd>
+            <dt>
+                @std.question
+            </dt>
+            <button class="btn-app" onclick="note(0,@std.id)">BAD</button>
+            <button class="btn-app" onclick="note(1,@std.id)">MEDIUM</button>
+            <button class="btn-app" onclick="note(2,@std.id)">GOOD</button>
+            <button class="btn-app" onclick="note(3,@std.id)">EXCELLENT</button>
+
+            i = i + 1;
+            <hr />
+        }
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+<script type="text/javascript">
+
+   // $(document).ready(function () {
+        function note(app,questid) {
+             $.ajax({
+                    type: "GET",
+                    url: "UpdateQuestion?questid="+questid+"&appreciation="+app,
+                    dataType: "json",
+
+                    success: function () {
+
+                        alert("registered !");
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    },
+                });
+        }
+       //  });
+  
+</script>
