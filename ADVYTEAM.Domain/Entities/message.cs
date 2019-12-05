@@ -21,8 +21,8 @@ namespace ADVYTEAM.Data
 
         public long? id_sender { get; set; }
 
-        public virtual utilisateur utilisateur { get; set; }
+        public virtual utilisateur sender { get; set; }
 
-        public virtual utilisateur utilisateur1 { get; set; }
+        public virtual utilisateur receiver { get; set; }
     }
 }

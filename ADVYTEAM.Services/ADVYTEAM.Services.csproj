@@ -42,12 +42,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="ContratService.cs" />
+    <Compile Include="IContratService.cs" />
+    <Compile Include="IMessageService.cs" />
+    <Compile Include="IPublicationService.cs" />
     <Compile Include="IReclamationService.cs" />
     <Compile Include="ISurveyQuestEmpService.cs" />
     <Compile Include="ISurveyQuestionService.cs" />
     <Compile Include="ISurveyService.cs" />
     <Compile Include="IUtilisateurService.cs" />
+    <Compile Include="MessageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublicationService.cs" />
     <Compile Include="ReclamationService.cs" />
     <Compile Include="SurveyQuestEmpService.cs" />
     <Compile Include="SurveyQuestionService.cs" />

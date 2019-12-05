@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login V18</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     
+    <link rel="icon" type="image/png" href="~/Content/images/icons/favicon.ico" />
+
+    @Styles.Render("~/login/css")
+     
+</head>
+<body style="background-color: #666666;">
+    @RenderBody()
+
+    @Scripts.Render("~/login/script")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

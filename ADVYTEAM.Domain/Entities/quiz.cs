@@ -15,7 +15,7 @@ namespace ADVYTEAM.Data
             userquizresponses = new HashSet<userquizresponse>();
             userquizs = new HashSet<userquiz>();
             userfeedbacks = new HashSet<userfeedback>();
-            quizquestions = new HashSet<quizquestion>();
+            questions = new HashSet<quizquestion>();
         }
 
         public long id { get; set; }
@@ -24,8 +24,10 @@ namespace ADVYTEAM.Data
 
         [StringLength(255)]
         public string title { get; set; }
+        
+        public string description { get; set; }
 
-        public long? skill_id { get; set; }
+        public long? skillId { get; set; }
 
         public int? min_correct_questions_percentage { get; set; }
 
@@ -39,7 +41,7 @@ namespace ADVYTEAM.Data
         public virtual ICollection<userfeedback> userfeedbacks { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<quizquestion> quizquestions { get; set; }
+        public virtual ICollection<quizquestion> questions { get; set; }
 
         public virtual skill skill { get; set; }
     }

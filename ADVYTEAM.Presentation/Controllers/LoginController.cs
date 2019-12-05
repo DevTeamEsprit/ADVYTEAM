@@ -1,11 +1,15 @@
 ﻿using ADVYTEAM.Data;
 using ADVYTEAM.Presentation.Models;
+using ADVYTEAM.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
+using System.Net.Mail;
 using System.Web.Mvc;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace ADVYTEAM.Presentation.Controllers
 {
@@ -14,6 +18,14 @@ namespace ADVYTEAM.Presentation.Controllers
         HttpClient Client;
         HttpResponseMessage responce;
         utilisateur user;
+        IUtilisateurService serviceUtilisateur;
+        IList<UserVM> lstcontact;
+
+        public LoginController()
+        {
+            serviceUtilisateur = new UtilisateurService();
+            lstcontact = new List<UserVM>();
+        }
         // GET: Login
         public ActionResult Index()
         {
@@ -40,63 +52,130 @@ namespace ADVYTEAM.Presentation.Controllers
             Client.BaseAddress = new Uri("http://localhost:9080");
             Client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             responce = Client.GetAsync("/PIDEV-web/PIDEV/gestionEmploye/login?login="+loginVm.login+"&pass="+loginVm.password).Result;
-
-            user = responce.Content.ReadAsAsync<utilisateur>().Result;
-
-            if (user != null)
+            if (responce.IsSuccessStatusCode)
             {
-                Session["userid"] = user.id;
-                Session["usernom"] = user.nom +" "+user.prenom;
-                Session["userimg"] = user.image;
-                return Redirect("~/Publication/Index");
-                // return RedirectToAction("Index");
+
+                user = responce.Content.ReadAsAsync<utilisateur>().Result;
+ 
+                    UserVM u = new UserVM
+                    {
+                        prenom = user.prenom,
+                        nom = user.nom,
+                        image = user.image,
+                        id = user.id
+                    };
+                    Session["userConnected"] = u;
+
+                    foreach (utilisateur user in serviceUtilisateur.GetMany())
+                    {
+                        lstcontact.Add(new UserVM()
+                        {
+                            id = user.id,
+                            nom = user.nom,
+                            prenom = user.prenom,
+                            image = user.image
+                        });
+                    }
+
+                    Session["lstContact"] = lstcontact;
+
+                    return Redirect("~/Publication/Index");
+                  
             }
             return View();
             
         }
 
-        // GET: Login/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult LogOff()
         {
-            return View();
+            Session.Contents.RemoveAll();
+
+            return RedirectToAction("Create");
         }
 
-        // POST: Login/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult OubliePassword(LoginVM loginVm)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
+ 
                 return View();
-            }
         }
 
-        // GET: Login/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult traiteCode(LoginVM loginVm)
         {
-            return View();
-        }
-
-        // POST: Login/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
+            utilisateur user = serviceUtilisateur.Get(u => u.email.Equals(loginVm.login));
+            if (user != null)
             {
-                // TODO: Add delete logic here
+                Random aleatoire = new Random();
+                int code = aleatoire.Next(1000, 9999);
 
-                return RedirectToAction("Index");
+ 
+                MailMessage mail = new MailMessage();
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                mail.From = new MailAddress("porjet2019@gmail.com");
+                mail.To.Add(user.email);
+                mail.Subject = "Oublié mot de passe";
+                mail.Body = "Bonjour M/Mme " + user.nom + " " + user.prenom + "  Votre Code est : " + code;
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("porjet2019@gmail.com", "duwhjaxubkjxebih");
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Send(mail);
+
+                Session["mail"] = user.email;
+                Session["code"] = code;
+                Session["user"] = user;
+
+                return RedirectToAction("newPassword");
             }
-            catch
-            {
+            else
                 return View();
+        }
+
+        public ActionResult newPassword()
+        {
+            utilisateur u = Session["user"] as utilisateur;
+
+         //   string email = Session["mail"].ToString();
+            string code = Session["code"].ToString();
+
+            oubliePass oublie = new oubliePass();
+            oublie.email = u.email;
+
+            return View(oublie);
+        }
+
+        public ActionResult changerPassword(oubliePass oublie)
+        {
+            utilisateur u = Session["user"] as utilisateur;
+            int code = Int32.Parse(Session["code"].ToString());
+            if (code == oublie.Code && oublie.password.Equals(oublie.confpassword)) {
+
+                u.password = MD5Hash(oublie.password);
+
+                serviceUtilisateur.Commit();
+
+                return RedirectToAction("Create");
+               
+            } 
+            return RedirectToAction("OubliePassword");
+        }
+
+        public static string MD5Hash(string text)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
+
+            //get hash result after compute it  
+            byte[] result = md5.Hash;
+
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                //change it into 2 hexadecimal digits  
+                //for each byte  
+                strBuilder.Append(result[i].ToString("x2"));
             }
+
+            return strBuilder.ToString();
         }
     }
 }

@@ -10,9 +10,9 @@ namespace ADVYTEAM.Data
 
     public partial class MyContext : DbContext
     {
-        public MyContext()
-            : base("name=MyContext1")
+        public MyContext() : base("name=MyContext1")
         {
+            
         }
 
         public virtual DbSet<category> categories { get; set; }
@@ -170,7 +170,7 @@ namespace ADVYTEAM.Data
                 .HasForeignKey(e => e.quiz_id);
 
             modelBuilder.Entity<quiz>()
-                .HasMany(e => e.quizquestions)
+                .HasMany(e => e.questions)
                 .WithOptional(e => e.quiz)
                 .HasForeignKey(e => e.quiz_id);
 
@@ -179,7 +179,7 @@ namespace ADVYTEAM.Data
                 .IsUnicode(false);
 
             modelBuilder.Entity<quizquestion>()
-                .HasMany(e => e.questionresponses)
+                .HasMany(e => e.responses)
                 .WithOptional(e => e.quizquestion)
                 .HasForeignKey(e => e.question_id);
 
@@ -194,7 +194,7 @@ namespace ADVYTEAM.Data
             modelBuilder.Entity<skill>()
                 .HasMany(e => e.quizs)
                 .WithOptional(e => e.skill)
-                .HasForeignKey(e => e.skill_id);
+                .HasForeignKey(e => e.skillId);
 
             modelBuilder.Entity<skill>()
                 .HasMany(e => e.userskills)
@@ -280,12 +280,12 @@ namespace ADVYTEAM.Data
 
             modelBuilder.Entity<utilisateur>()
                 .HasMany(e => e.messages)
-                .WithOptional(e => e.utilisateur)
+                .WithOptional(e => e.sender)
                 .HasForeignKey(e => e.id_sender);
 
             modelBuilder.Entity<utilisateur>()
                 .HasMany(e => e.messages1)
-                .WithOptional(e => e.utilisateur1)
+                .WithOptional(e => e.receiver)
                 .HasForeignKey(e => e.id_receiver);
 
             modelBuilder.Entity<utilisateur>()
@@ -324,6 +324,6 @@ namespace ADVYTEAM.Data
                 .HasForeignKey(e => e.manager_id);
         }
 
-        public System.Data.Entity.DbSet<ADVYTEAM.Domain.Entities.reclamation> reclamations { get; set; }
+        public virtual System.Data.Entity.DbSet<ADVYTEAM.Domain.Entities.reclamation> reclamations { get; set; }
     }
 }

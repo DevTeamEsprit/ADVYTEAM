@@ -41,8 +41,18 @@ namespace ADVYTEAM.Presentation
                       "~/Content/plugins/fontawesome-free/css/all.min.css",
                       "~/Content/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"
                       ));
-            
+
+            bundles.Add(new ScriptBundle("~/login/script").Include(
+                        "~/Content/js/jquery-3.2.1.min.js",
+                        "~/Content/js/main.js"
+                        ));
+
+            bundles.Add(new StyleBundle("~/login/css").Include(
+                      "~/Content/css/util.css",
+                      "~/Content/css/main.css"
+                      ));
             #endregion
         }
     }
 }
+ 

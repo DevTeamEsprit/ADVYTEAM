@@ -1,37 +1,67 @@
 ﻿@model ADVYTEAM.Presentation.Models.LoginVM
+@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+            <div class="login100-form validate-form">
+                <span class="login100-form-title p-b-43">
+                    Login to continue
+                </span>
+                <div class="form-group">
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>LoginVM</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.login, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.login, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.login, "", new { @class = "text-danger" })
+                    <div class="col-md-10">
+
+                        @Html.ValidationMessageFor(model => model.login, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+
+                    @Html.EditorFor(model => model.login, new { htmlAttributes = new { @class = "input100" } })
+                    <span class="focus-input100"></span>
+                    <span class="label-input100">Email</span>
+                </div>
+
+
+
+                <div class="wrap-input100 validate-input" data-validate="Password is required">
+                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "input100", @type = "password" } })
+                    <span class="focus-input100"></span>
+                    <span class="label-input100">Password</span>
+                </div>
+
+                <div class="flex-sb-m w-full p-t-3 p-b-32">
+                    <div class="contact100-form-checkbox">
+                        
+                    </div>
+
+                    <div>
+                        <a href="@Url.Action("OubliePassword", "Login")" class="btn btn-tool" data-widget="remove">
+                            Forgot Password?
+                        </a>
+
+                    </div>
+                </div>
+
+
+                <div class="container-login100-form-btn">
+
+                    <input type="submit" value="S'authentifier" class="login100-form-btn" />
+                </div>
+
+
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            }
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+
+            <div class="login100-more" style="background-image: url('../../Content/images/bg-01.jpg');">
             </div>
         </div>
     </div>
-}
-
-<div>
-   
 </div>

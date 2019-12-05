@@ -94,6 +94,10 @@
     <Compile Include="Migrations\201911171057412_reclam.designer.cs">
       <DependentUpon>201911171057412_reclam.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911301607374_nn.cs" />
+    <Compile Include="Migrations\201911301607374_nn.designer.cs">
+      <DependentUpon>201911301607374_nn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201912042043221_survey.cs" />
     <Compile Include="Migrations\201912042043221_survey.designer.cs">
       <DependentUpon>201912042043221_survey.cs</DependentUpon>
@@ -122,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912042043221_survey.resx">
       <DependentUpon>201912042043221_survey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911301607374_nn.resx">
+      <DependentUpon>201911301607374_nn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

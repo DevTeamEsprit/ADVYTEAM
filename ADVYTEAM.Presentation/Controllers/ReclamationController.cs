@@ -10,40 +10,98 @@ namespace ADVYTEAM.Presentation.Controllers
 {
     public class ReclamationController : Controller
     {
-      //  IDataBaseFactory factory;
-      //  IUnitOfWork uow;
-       
-       
-     //   IService<reclamation> serReclamation;
-     //   IService<utilisateur> serUser;
-             IEnumerable<reclamation> lstRecl;
-             IReclamationService serviceReclamation;
-             IUtilisateurService serviceUtilisateur;
+ 
+        IEnumerable<reclamation> lstRecl;
+        IEnumerable<reclamation> lstReclt;
+        IEnumerable<reclamation> lstReclc;
+        IEnumerable<reclamation> lstRecln;
+        IReclamationService serviceReclamation;
+        IUtilisateurService serviceUtilisateur;
 
         public ReclamationController()
         {
             serviceReclamation = new ReclamationService();
             serviceUtilisateur = new UtilisateurService();
-            //   factory = new DataBaseFactory();
-            //   uow = new UnitOfWork(factory);
-            //    serReclamation = new Service<reclamation>(uow);
-            //    serUser = new Service<utilisateur>(uow);
+ 
         }
-        // GET: Reclamation
-        public ActionResult Index()
+
+        public ActionResult updateRecl(int id)
         {
-            lstRecl = serviceReclamation.GetMany();
+            reclamation r = serviceReclamation.Get(f => f.Id == id);
+            utilisateur us = serviceUtilisateur.Get(user => user.id == r.UserId);
+
+            if (r.Etat == 0)
+                r.Etat = 1;
+            else if (r.Etat == 1)
+            {
+                r.Etat = 2;
+                r.DateTraitement = DateTime.Now;
+            }
+
+            foreach (reclamation rec in us.Reclamations)
+            {
+             if(rec.Id==id)
+                {
+                    if (rec.Etat == 0)
+                        rec.Etat = 1;
+                    else if (rec.Etat == 1) { 
+                        rec.Etat = 2;
+                    rec.DateTraitement=DateTime.Now;
+                }
+                }
+            } 
+            serviceUtilisateur.Commit();
+            return RedirectToAction("Index");
+        }
+
+
+        public ActionResult MesReclamation()
+        {
+            UserVM userc = Session["userConnected"] as UserVM;
+
+            //   lstRecl = serviceReclamation.GetMany(reclamation=>reclamation.UserId== userc.id);
+            lstRecl = serviceReclamation.GetMesReclmations(userc.id);
+
             foreach (var rec in lstRecl)
             {
                 rec.Utilisateur = serviceUtilisateur.GetById((int)rec.UserId);
             }
-                /*    lstRecl = serReclamation.GetMany();
-                    serReclamation.Dispose();
-                    foreach (var rec in lstRecl)
-                    {
-                        rec.Utilisateur = serUser.GetById((int)rec.UserId);
-                    }*/
-                return View(lstRecl);
+            ViewBag.listReclamtion = lstRecl;
+
+            return View();
+        }
+
+
+            // GET: Reclamation
+        public ActionResult Index()
+        {
+            lstRecl = null;
+            UserVM userc = Session["userConnected"] as UserVM;
+            if (userc == null)
+                return RedirectToAction("Create", "Login");
+
+            lstRecln = serviceReclamation.GetReclmationsAttent();
+            lstReclc = serviceReclamation.GetReclmationsEnCour();
+            lstReclt = serviceReclamation.GetReclmationsTraite();
+            // lstRecl = serviceReclamation.GetMany();
+            foreach (var rec in lstRecln)
+            {
+                rec.Utilisateur = serviceUtilisateur.GetById((int)rec.UserId);
+            }
+            foreach (var rec in lstReclc)
+            {
+                rec.Utilisateur = serviceUtilisateur.GetById((int)rec.UserId);
+            }
+            foreach (var rec in lstReclt)
+            {
+                rec.Utilisateur = serviceUtilisateur.GetById((int)rec.UserId);
+            }
+            ViewBag.reclamationAttnte = lstRecln;
+            ViewBag.reclamationCours = lstReclc;
+            ViewBag.reclamationTraite= lstReclt;
+
+
+            return View();
         }
 
         // GET: Reclamation/Details/5
@@ -55,6 +113,11 @@ namespace ADVYTEAM.Presentation.Controllers
         // GET: Reclamation/Create
         public ActionResult Create()
         {
+            UserVM userc = Session["userConnected"] as UserVM;
+            if (userc == null)
+                return RedirectToAction("Create", "Login");
+            else
+
             return View();
         }
 
@@ -62,6 +125,8 @@ namespace ADVYTEAM.Presentation.Controllers
         [HttpPost]
         public ActionResult Create(ReclamationVM reclamationVM)
         {
+            UserVM userc = Session["userConnected"] as UserVM;
+
             if (ModelState.IsValid)
             {
                 reclamation r = new reclamation()
@@ -70,21 +135,19 @@ namespace ADVYTEAM.Presentation.Controllers
                     Description = reclamationVM.Description,
                     DateReclamation = DateTime.Now,
                     DateTraitement = null,
-                    Etat = false,
-                    UserId = 1L,
+                    Etat = 0,
+                    UserId = userc.id
                     
                 };
-                utilisateur user = serviceUtilisateur.GetById((int)1L);
+
+              //  serviceReclamation.Add(r);
+              //  serviceReclamation.Commit();
+                utilisateur user = serviceUtilisateur.GetById((int)userc.id);
                 user.Reclamations.Add(r);
                 serviceUtilisateur.Commit();
+ 
 
-            //    serviceReclamation.Add(r);
-           //     serviceReclamation.Commit();
-                //    serReclamation.Add(r);
-                //serReclamation.Commit();
-            //    uow.Dispose();
-
-                return RedirectToAction("Index");
+                return RedirectToAction("MesReclamation");
             }
             return View();
         }
